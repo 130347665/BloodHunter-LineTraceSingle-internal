@@ -10,3 +10,5 @@ Universal ImGui implementation through DirectX 11 Hook (kiero)
 </ul>
 <h2>Kiero</h2>
 <p>You can find Kiero's official repository <a href="https://github.com/Rebzzel/kiero">here</a>
+<h2>Join My Discord</h2>
+<p>Discord:<a href="https://discordapp.com/users/275337692240412673">here</a>

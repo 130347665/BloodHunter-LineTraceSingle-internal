@@ -22,6 +22,7 @@ namespace Data
 	ULONG64 RootComponent = NULL;
 	ULONG64 CameraManager = NULL;
 	ULONG64 PlayerController = NULL;
+	ULONG64 magicbullet_addr = NULL; //子弹追踪
 	void DrawLine(int x, int y, int x1, int y1, ImU32 color, float thickness)
 	{
 
@@ -121,7 +122,7 @@ namespace Data
 
 		Vector2 rect_0 = Vector2(); Vector2 rect_1 = Vector2();
 
-
+		//骨骼
 		for (int i = 0; i < 14; ++i)
 		{
 
@@ -200,7 +201,7 @@ namespace Data
 	}
 
 	bool Get()
-	{
+	{	
 		if (!Module)
 			Module = (ULONG64)GetModuleHandle(NULL);
 		Uworld = Ram<ULONG64>(Module + OFFSET_Uworld);												
@@ -229,7 +230,7 @@ namespace Data
 		ViewWorld = Ram<_D3DMATRIX2>(Matrix);
 		Vector4 Rect = Vector4();
 		Vector2 Rect_0 = Vector2();
-		printf("Count:%d \n", Count);
+		//printf("Count:%d \n", Count);
 		for (int i = 0; i < Count; i++)
 		{
 			ULONG64 Object = Ram<ULONG64>(Actor + i * 8);
@@ -271,6 +272,39 @@ namespace Data
 		}
 
 	}
+
+	//void hookMagicBullet()
+	//{
+	//	long long gStatus = NULL;
+	//	static uint64_t JumpAddress;
+	//	static uint64_t HookAddress = (uint64_t)Module + 0x2C38203;
+	//	uintptr_t aaa = protectMemory<uintptr_t>(-1, HookAddress, 64);
+	//	PthProtectMemory(GameVars.dwProcessId, HookAddress, 20, 64, &gStatus);
+	//	Bytes HookB
+	//	{
+	//		 0x44,0x0F,0x11,0xA7,0xD0,0x01,0x00,0x00,0xB2,0x01,0x44,0x0F,0x11,0xBF,0xE0,0x01,0x00,0x00
+	//	};
+	//	Bytes HookA{};
+	//	JumpAddress = HookAddress + 18;
+	//	if (GameVars.magicbullet_addr != 0) {
+	//		//WriteBytes(HookAddress, HookB, HookB.Length());
+	//		return;
+	//	}
+	//	UINT64 VirtualAddress = PthAllocateMemory(GameVars.dwProcessId, 10000, 64, &gStatus);
+	//	HookA += JMP_FF25(VirtualAddress, 4); // JMP 占用14字节 这里需要18所以 18 - 14
+	//	Write<uint64_t>(VirtualAddress + 0x500, 8702406);
+	//	HookB += {0x53, 0x52, 0x48, 0x8B, 0x57, 0x18, 0x48, 0x3B, 0x15, 0xE1, 0x04, 0x00, 0x00, 0x75, 0x0E, 0x0F, 0x10, 0x25, 0xD8, 0x03, 0x00, 0x00, 0x0F, 0x11, 0xA7, 0xD0, 0x01, 0x00, 0x00, 0x5A, 0x5B};
+	//	HookB += JMP_FF25(JumpAddress, 0);
+	//	GameVars.magicbullet_addr = VirtualAddress + 0x400;
+	//	printf("VirtualAddress === %lld \n", VirtualAddress);
+	//	WriteBytes(VirtualAddress, HookB, HookB.Length());
+	//	WriteBytes(HookAddress, HookA, HookA.Length());
+	//}
+
+	//void MagicBullet() 
+	//{
+	//	Write<Vector3>(GameVars.magicbullet_addr, head_pos);
+	//}
 
 
 }

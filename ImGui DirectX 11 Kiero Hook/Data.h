@@ -468,7 +468,6 @@ namespace Data
 	extern float WindowHeight;
 	extern float ScreenWidth;
 	extern float ScreenHeight;
-
 	template<class T>
 	T Ram(uintptr_t ptr)
 	{
@@ -481,8 +480,17 @@ namespace Data
 		}
 		return buff;
 	}
+	template<typename type>
+	bool Write(uintptr_t address, const type& value)
+	{
+		if (reinterpret_cast<type*>(address) != nullptr)
+		{
+			*reinterpret_cast<type*>(address) = value;
+			return true;
+		}
 
-
+		return false;
+	}
 
 	void Draw();
 	bool LineOfSightTo(ULONG64 PlayerController, ULONG64 Other, Vector3 ViewPoint, bool bAlternateChecks = false);

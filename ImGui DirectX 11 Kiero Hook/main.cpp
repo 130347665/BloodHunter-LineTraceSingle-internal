@@ -9,6 +9,10 @@ ID3D11Device* pDevice = NULL;
 ID3D11DeviceContext* pContext = NULL;
 ID3D11RenderTargetView* mainRenderTargetView;
 
+bool P_Menu;//菜单开关
+bool P_ESP;//透视开关
+bool P_MagicBullet;//追踪开关
+
 void InitImGui()
 {
 	ImGui::CreateContext();
@@ -60,9 +64,24 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	Data::Draw();
-	//ImGui::Begin("ImGui Window");
-	//ImGui::End();
+	if (P_ESP)
+	{
+		Data::Draw();
+	}
+	if (P_MagicBullet)
+	{
+		Data::Draw();
+	}
+
+	ImGui::SetNextWindowSize(ImVec2(400,300));
+	if (GetAsyncKeyState(VK_HOME) & 1)P_Menu = !P_Menu;
+	ImGui::GetIO().MouseDrawCursor = P_Menu; // 让鼠标穿透
+	if(P_Menu){
+		ImGui::Begin("ImGui Window",0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize |ImGuiWindowFlags_NoScrollbar);
+		ImGui::Checkbox("ESP", &P_ESP); ImGui::SameLine();
+		ImGui::Checkbox("MagicBullet", &P_MagicBullet);
+		ImGui::End();
+	}
 
 	ImGui::Render();
 
@@ -94,7 +113,6 @@ BOOL WINAPI DllMain(HMODULE hMod, DWORD dwReason, LPVOID lpReserved)
 	switch (dwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-
 		AllocConsole();
 		SetConsoleTitle("Debug");
 		freopen("CONIN$", "r", stdin);

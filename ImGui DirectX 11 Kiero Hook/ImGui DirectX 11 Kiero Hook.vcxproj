@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -166,6 +166,7 @@
     <ResourceCompile Include="kiero\minhook\dll_resources\MinHook.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bytes.hpp" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
